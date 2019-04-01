@@ -81,23 +81,25 @@ def gen_hybrid_image(image1, image2, cutoff_frequency):
   # Steps:
   # (1) Remove the high frequencies from image1 by blurring it. The amount of
   #     blur that works best will vary with different image pairs
-  # generate a 1x(2k+1) gaussian kernel with mean=0 and sigma = s, see https://stackoverflow.com/questions/17190649/how-to-obtain-a-gaussian-filter-in-python
+  # generate a 1x(2k+1) gaussian kernel with mean=0 and sigma = s, 
+  # see https://stackoverflow.com/questions/17190649/how-to-obtain-a-gaussian-filter-in-python
   s, k = cutoff_frequency, cutoff_frequency*2
   probs = np.asarray([exp(-z*z/(2*s*s))/sqrt(2*pi*s*s) for z in range(-k,k+1)], dtype=np.float32)
   kernel = np.outer(probs, probs)
+  print(kernel.shape)
   
   # Your code here:
-  low_frequencies = None # Replace with your implementation
+  low_frequencies = my_imfilter(image1, kernel) # Replace with your implementation
 
   # (2) Remove the low frequencies from image2. The easiest way to do this is to
   #     subtract a blurred version of image2 from the original version of image2.
   #     This will give you an image centered at zero with negative values.
   # Your code here #
-  high_frequencies = None # Replace with your implementation
+  high_frequencies = image2 - my_imfilter(image2, kernel) # Replace with your implementation
 
   # (3) Combine the high frequencies and low frequencies
   # Your code here #
-  hybrid_image = None # Replace with your implementation
+  hybrid_image = low_frequencies + high_frequencies # Replace with your implementation
 
   # (4) At this point, you need to be aware that values larger than 1.0
   # or less than 0.0 may cause issues in the functions in Python for saving
@@ -105,6 +107,9 @@ def gen_hybrid_image(image1, image2, cutoff_frequency):
   # gen_hybrid_image().
   # One option is to clip (also called clamp) all values below 0.0 to 0.0, 
   # and all values larger than 1.0 to 1.0.
+  hybrid_image = np.clip(hybrid_image, 0.0, 1.0)
+  low_frequencies = np.clip(low_frequencies, 0.0, 1.0)
+  high_frequencies = np.clip(high_frequencies, 0.0, 1.0)
 
   return low_frequencies, high_frequencies, hybrid_image
 
