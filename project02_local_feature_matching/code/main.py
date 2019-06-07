@@ -3,6 +3,13 @@
 # Edited by James Tompkin
 # Adapted for python by asabel and jdemari1 (2019)
 
+from helpers import cheat_interest_points, evaluate_correspondence
+import visualize
+import student
+from skimage.color import rgb2gray
+from skimage.transform import rescale
+from skimage import io, filters, feature, img_as_float32
+import matplotlib.pyplot as plt
 import csv
 import sys
 import argparse
@@ -10,15 +17,7 @@ import numpy as np
 
 import matplotlib
 matplotlib.use("TkAgg")
-import matplotlib.pyplot as plt
 
-from skimage import io, filters, feature, img_as_float32
-from skimage.transform import rescale
-from skimage.color import rgb2gray
-
-import student
-import visualize
-from helpers import cheat_interest_points, evaluate_correspondence
 
 # This script
 # (1) Loads and resizes images
@@ -27,6 +26,7 @@ from helpers import cheat_interest_points, evaluate_correspondence
 # (4) Finds matching features                               (you code this)
 # (5) Visualizes the matches
 # (6) Evaluates the matches based on ground truth correspondences
+
 
 def load_data(file_name):
     """
@@ -81,6 +81,7 @@ def load_data(file_name):
 
     return image1, image2, eval_file
 
+
 def main():
     """
     Reads in the data,
@@ -98,8 +99,10 @@ def main():
     # create the command line parser
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-a", "--average_accuracy", help="Include this flag to compute the average accuracy of your matching.")
-    parser.add_argument("-p", "--pair", required=True, help="Either notre_dame, mt_rushmore, or e_gaudi. Specifies which image pair to match")
+    parser.add_argument("-a", "--average_accuracy",
+                        help="Include this flag to compute the average accuracy of your matching.")
+    parser.add_argument("-p", "--pair", required=True,
+                        help="Either notre_dame, mt_rushmore, or e_gaudi. Specifies which image pair to match")
 
     args = parser.parse_args()
 
@@ -111,7 +114,7 @@ def main():
     # comment these two lines
     image1 = rgb2gray(image1)
     image2 = rgb2gray(image2)
-    
+
     # make images smaller to speed up the algorithm. This parameter
     # gets passed into the evaluation code, so don't resize the images
     # except for changing this parameter - We will evaluate your code using
@@ -164,14 +167,14 @@ def main():
     # !!! You will need to implement match_features !!!
 
     print("Matching features...")
-    matches, confidences = student.match_features(image1_features, image2_features)
-    
-    if len(matches.shape) == 1:
-        print( "No matches!")
-        return
-    
-    print("Done!")
+    matches, confidences = student.match_features(
+        image1_features, image2_features)
 
+    if len(matches.shape) == 1:
+        print("No matches!")
+        return
+
+    print("Done!")
 
     # 5) Visualization
 
@@ -185,12 +188,11 @@ def main():
     # about the quality of your matches, then shows the same figure. If you want to
     # just see the figure, you can uncomment the function call to visualize.show_correspondences
 
-    
     num_pts_to_visualize = matches.shape[0]
     print("Matches: " + str(num_pts_to_visualize))
     # visualize.show_correspondences(image1, image2, x1, y1, x2, y2, matches, filename=args.pair + "_matches.jpg")
 
-    ## 6) Evaluation
+    # 6) Evaluation
     # This evaluation function will only work for the Notre Dame, Episcopal
     # Gaudi, and Mount Rushmore image pairs. Comment out this function if you
     # are not testing on those image pairs. Only those pairs have ground truth
@@ -204,9 +206,10 @@ def main():
     num_pts_to_evaluate = matches.shape[0]
 
     evaluate_correspondence(image1, image2, eval_file, scale_factor,
-        x1, y1, x2, y2, matches, confidences, num_pts_to_visualize)
+                            x1, y1, x2, y2, matches, confidences, num_pts_to_visualize)
 
     return
+
 
 if __name__ == '__main__':
     main()
