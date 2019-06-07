@@ -31,7 +31,7 @@ def get_interest_points(image, feature_width):
 
 
     :params:
-    :image: a grayscale or color image (your choice depending on your 
+    :image: a grayscale or color image (your choice depending on your
             implementation)
     :feature_width:
 
@@ -40,7 +40,7 @@ def get_interest_points(image, feature_width):
     :ys: an np array of the y coordinates of the interest points in the image
 
     :optional returns (may be useful for extra credit portions):
-    :confidences: an np array indicating the confidence (strength) of each 
+    :confidences: an np array indicating the confidence (strength) of each
                   interest point
     :scale: an np array indicating the scale of each interest point
     :orientation: an np array indicating the orientation of each interest point
@@ -131,47 +131,51 @@ def get_features(image, x, y, feature_width):
 
 def match_features(im1_features, im2_features):
     '''
-    Implements the Nearest Neighbor Distance Ratio Test to assign matches between interest points
-    in two images.
+    Implements the Nearest Neighbor Distance Ratio Test to assign matches
+    between interest points in two images.
 
     Please implement the "Nearest Neighbor Distance Ratio (NNDR) Test" ,
     Equation 4.18 in Section 4.1.3 of Szeliski.
 
     For extra credit you can implement spatial verification of matches.
 
-    Please assign a confidence, else the evaluation function will not work. Remember that
-    the NNDR test will return a number close to 1 for feature points with similar distances.
-    Think about how confidence relates to NNDR.
+    Please assign a confidence, else the evaluation function will not work.
+    Remember that the NNDR test will return a number close to 1 for feature
+    points with similar distances. Think about how confidence relates to NNDR.
 
     This function does not need to be symmetric (e.g., it can produce
     different numbers of matches depending on the order of the arguments).
 
-    A match is between a feature in im1_features and a feature in im2_features. We can
-    represent this match as a the index of the feature in im1_features and the index
-    of the feature in im2_features
+    A match is between a feature in im1_features and a feature in im2_features.
+    We can represent this match as a the index of the feature in im1_features
+    and the index of the feature in im2_features
 
-    Useful functions: A working solution does not require the use of all of these
-    functions, but depending on your implementation, you may find some useful. Please
-    reference the documentation for each function/library and feel free to come to hours
-    or post on Piazza with any questions
+    Useful functions: A working solution does not require the use of all of
+    these functions, but depending on your implementation, you may find some
+    useful. Please reference the documentation for each function/library and
+    feel free to come to hours or post on Piazza with any questions
 
         - zip (python built in function)
 
     :params:
-    :im1_features: an np array of features returned from get_features() for interest points in image1
-    :im2_features: an np array of features returned from get_features() for interest points in image2
+    :im1_features: an np array of features returned from get_features() for
+        interest points in image1
+    :im2_features: an np array of features returned from get_features() for
+        interest points in image2
 
     :returns:
-    :matches: an np array of dimension k x 2 where k is the number of matches. The first
-            column is an index into im1_features and the second column is an index into im2_features
+    :matches: an np array of dimension k x 2 where k is the number of matches.
+        The first column is an index into im1_features and the second column is
+        an index into im2_features
     :confidences: an np array with a real valued confidence for each match
     '''
 
-    # TODO: Your implementation here! See block comments and the project webpage for instructions
+    # TODO: Your implementation here! See block comments and the project
+    # webpage for instructions
 
     # These are placeholders - replace with your matches and confidences!
 
-    matches = np.asarray([0,0])
+    matches = np.asarray([0, 0])
     confidences = np.asarray([0])
 
     return matches, confidences
