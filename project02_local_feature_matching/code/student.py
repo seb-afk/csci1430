@@ -8,30 +8,31 @@ def get_interest_points(image, feature_width):
     '''
     Returns a set of interest points for the input image
 
-    (Please note that we recommend implementing this function last and using cheat_interest_points()
-    to test your implementation of get_features() and match_features())
+    (Please note that we recommend implementing this function last and using
+    cheat_interest_points() to test your implementation of get_features() and
+    match_features())
 
-    Implement the Harris corner detector (See Szeliski 4.1.1) to start with.
-    You do not need to worry about scale invariance or keypoint orientation estimation
-    for your Harris corner detector.
-    You can create additional interest point detector functions (e.g. MSER)
-    for extra credit.
+    Implement the Harris corner detector (See Szeliski 4.1.1) to start with. You
+    do not need to worry about scale invariance or keypoint orientation
+    estimation for your Harris corner detector. You can create additional
+    interest point detector functions (e.g. MSER) for extra credit.
 
-    If you're finding spurious (false/fake) interest point detections near the boundaries,
-    it is safe to simply suppress the gradients / corners near the edges of
-    the image.
+    If you're finding spurious (false/fake) interest point detections near the
+    boundaries, it is safe to simply suppress the gradients / corners near the
+    edges of the image.
 
-    Useful functions: A working solution does not require the use of all of these
-    functions, but depending on your implementation, you may find some useful. Please
-    reference the documentation for each function/library and feel free to come to hours
-    or post on Piazza with any questions
+    Useful functions: A working solution does not require the use of all of
+    these functions, but depending on your implementation, you may find some
+    useful. Please reference the documentation for each function/library and
+    feel free to come to hours or post on Piazza with any questions
 
         - skimage.feature.peak_local_max
         - skimage.measure.regionprops
 
 
     :params:
-    :image: a grayscale or color image (your choice depending on your implementation)
+    :image: a grayscale or color image (your choice depending on your 
+            implementation)
     :feature_width:
 
     :returns:
@@ -39,7 +40,8 @@ def get_interest_points(image, feature_width):
     :ys: an np array of the y coordinates of the interest points in the image
 
     :optional returns (may be useful for extra credit portions):
-    :confidences: an np array indicating the confidence (strength) of each interest point
+    :confidences: an np array indicating the confidence (strength) of each 
+                  interest point
     :scale: an np array indicating the scale of each interest point
     :orientation: an np array indicating the orientation of each interest point
 
