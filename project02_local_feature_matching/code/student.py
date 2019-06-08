@@ -60,12 +60,12 @@ def get_features(image, x, y, feature_width):
     '''
     Returns a set of feature descriptors for a given set of interest points.
 
-    (Please note that we reccomend implementing this function after you have implemented
-    match_features)
+    (Please note that we reccomend implementing this function after you have
+    implemented match_features)
 
-    To start with, you might want to simply use normalized patches as your
-    local feature. This is very simple to code and works OK. However, to get
-    full credit you will need to implement the more effective SIFT-like descriptor
+    To start with, you might want to simply use normalized patches as your local
+    feature. This is very simple to code and works OK. However, to get full
+    credit you will need to implement the more effective SIFT-like descriptor
     (See Szeliski 4.1.2 or the original publications at
     http://www.cs.ubc.ca/~lowe/keypoints/)
 
@@ -96,21 +96,22 @@ def get_features(image, x, y, feature_width):
     Another simple trick which can help is to raise each element of the final
     feature vector to some power that is less than one.
 
-    Useful functions: A working solution does not require the use of all of these
-    functions, but depending on your implementation, you may find some useful. Please
-    reference the documentation for each function/library and feel free to come to hours
-    or post on Piazza with any questions
+    Useful functions: A working solution does not require the use of all of
+    these functions, but depending on your implementation, you may find some
+    useful. Please reference the documentation for each function/library and
+    feel free to come to hours or post on Piazza with any questions
 
         - skimage.filters (library)
 
 
     :params:
-    :image: a grayscale or color image (your choice depending on your implementation)
+    :image: a grayscale or color image (your choice depending on your 
+        implementation)
     :x: np array of x coordinates of interest points
     :y: np array of y coordinates of interest points
     :feature_width: in pixels, is the local feature width. You can assume
-                    that feature_width will be a multiple of 4 (i.e. every cell of your
-                    local SIFT-like feature will have an integer width and height).
+        that feature_width will be a multiple of 4 (i.e. every cell of your
+        local SIFT-like feature will have an integer width and height).
     If you want to detect and describe features at multiple scales or
     particular orientations you can add input arguments.
 
