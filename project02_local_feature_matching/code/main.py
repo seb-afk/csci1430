@@ -167,7 +167,7 @@ def main():
     # !!! You will need to implement match_features !!!
 
     print("Matching features...")
-    matches, confidences = student.match_features(
+    matches, confidences = development.match_features(
         image1_features, image2_features)
 
     if len(matches.shape) == 1:
