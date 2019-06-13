@@ -158,8 +158,8 @@ def main():
     # !!! You will need to implement get_features. !!!
 
     print("Getting features...")
-    image1_features = student.get_features(image1, x1, y1, feature_width)
-    image2_features = student.get_features(image2, x2, y2, feature_width)
+    image1_features = development.get_features(image1, x1, y1, feature_width)
+    image2_features = development.get_features(image2, x2, y2, feature_width)
 
     print("Done!")
 
@@ -167,7 +167,7 @@ def main():
     # !!! You will need to implement match_features !!!
 
     print("Matching features...")
-    matches, confidences = development.match_features(
+    matches, confidences = student.match_features(
         image1_features, image2_features)
 
     if len(matches.shape) == 1:
