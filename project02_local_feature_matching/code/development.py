@@ -89,6 +89,9 @@ def get_features(image, x, y, feature_width):
     if feature_width % 4 != 0:
         raise ValueError("feature_width must be a multiple of 4.")
         
+    x = np.round(x).astype(int).flatten()
+    y = np.round(y).astype(int).flatten()
+        
     offset = feature_width // 2
     descriptors = list()
     for xi, yi in zip(x,y):
