@@ -88,10 +88,8 @@ def get_features(image, x, y, feature_width):
     '''
     if feature_width % 4 != 0:
         raise ValueError("feature_width must be a multiple of 4.")
-        
     x = np.round(x).astype(int).flatten()
     y = np.round(y).astype(int).flatten()
-        
     offset = feature_width // 2
     descriptors = list()
     for xi, yi in zip(x,y):
@@ -106,7 +104,7 @@ def get_features(image, x, y, feature_width):
         # TODO implement SIFT features
         mu = np.mean(patches, axis=2, keepdims=True)
         patches_norm = (patches - mu)
-        
+            
         feature_vector = patches.flatten()
         descriptors.append(feature_vector)
     return np.array(descriptors)
