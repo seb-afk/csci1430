@@ -24,7 +24,6 @@ def get_idx_2smallest_dist(distances):
     d2_ix = [np.arange(n_rows), idxs[:,1]]
     return d1_ix, d2_ix
 
-
 def match_features(im1_features, im2_features):
     """ Returns the index of the common image features as well as the 
     confidence of a correct match.
@@ -78,8 +77,6 @@ def get_features(image, x, y, feature_width):
     feature_width: in pixels, is the local feature width. You can assume
         that feature_width will be a multiple of 4 (i.e. every cell of your
         local SIFT-like feature will have an integer width and height).
-    If you want to detect and describe features at multiple scales or
-    particular orientations you can add input arguments.
 
     Returns
     -------
@@ -89,10 +86,24 @@ def get_features(image, x, y, feature_width):
             dimensionality is 128)
 
     '''
-
-    # TODO: Your implementation here! See block comments and the project webpage for instructions
-
-    # This is a placeholder - replace this with your features!
-    features = np.asarray([0])
-
-    return features
+    if feature_width % 4 != 0:
+        raise ValueError("feature_width must be a multiple of 4.")
+        
+    offset = feature_width // 2
+    descriptors = list()
+    for xi, yi in zip(x,y):
+        crop = image[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
+        if crop.shape != (feature_width, feature_width):
+            # Crop does not satisfy size constraint, skip keypoint.
+            print("skip")
+            continue
+        patches = np.array(np.hsplit(np.array(np.hsplit(crop, 4)).reshape(4,-1),4))
+        
+        # Build feature vector
+        # TODO implement SIFT features
+        mu = np.mean(patches, axis=2, keepdims=True)
+        patches_norm = (patches - mu)
+        
+        feature_vector = patches.flatten()
+        descriptors.append(feature_vector)
+    return np.array(descriptors)
