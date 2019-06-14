@@ -5,6 +5,7 @@
 
 from helpers import cheat_interest_points, evaluate_correspondence
 import visualize
+import development
 import student
 from skimage.color import rgb2gray
 from skimage.transform import rescale
@@ -137,10 +138,10 @@ def main():
     # want to use the ta ground truth points, you can comment out the precedeing two
     # lines and uncomment the following line to do this.
 
-    #(x1, y1, x2, y2) = cheat_interest_points(eval_file, scale_factor)
+    (x1, y1, x2, y2) = cheat_interest_points(eval_file, scale_factor)
 
-    (x1, y1) = student.get_interest_points(image1, feature_width)
-    (x2, y2) = student.get_interest_points(image2, feature_width)
+    # (x1, y1) = development.get_interest_points(image1, feature_width)
+    # (x2, y2) = development.get_interest_points(image2, feature_width)
 
     # if you want to view your corners uncomment these next lines!
 
@@ -167,7 +168,7 @@ def main():
     # !!! You will need to implement match_features !!!
 
     print("Matching features...")
-    matches, confidences = student.match_features(
+    matches, confidences = development.match_features(
         image1_features, image2_features)
 
     if len(matches.shape) == 1:
