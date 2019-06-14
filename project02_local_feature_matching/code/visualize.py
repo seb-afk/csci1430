@@ -27,12 +27,12 @@ def show_correspondences(imgA, imgB, X1, Y1, X2, Y2, matches, mode='arrows', fil
 		kp1 = zip_x_y(Y1, X1)
 		kp2 = zip_x_y(Y2, X2)
 		matches = matches.astype(int)
-		plot_matches(ax, imgA, imgB, kp1, kp2, matches)
-
-	plt.show()
+		plot_matches(ax, imgA, imgB, kp1, kp2, matches, only_matches=True)
 
 	if filename:
-		plt.savefig(filename)
+		plt.savefig(filename, dpi = 300)
+	else:
+		plt.show()
 
 	return
 
