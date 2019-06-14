@@ -92,19 +92,34 @@ def get_features(image, x, y, feature_width):
     y = np.round(y).astype(int).flatten()
     offset = feature_width // 2
     descriptors = list()
+    n_bins = 8
+    
+    # compute gradients, magnitudes, angles
+    gradients = np.array(np.gradient(image))
+    magnitudes = np.linalg.norm(gradients, axis=0)
+    angles = np.angle(np.arctan2(gradients[0], gradients[1]), deg=True)
+    
+    # Loop through keypoints
     for xi, yi in zip(x,y):
-        crop = image[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
-        if crop.shape != (feature_width, feature_width):
+        #crop_image = image[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
+        crop_magnitudes = magnitudes[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
+        crop_angles = angles[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
+        if crop_magnitudes.shape != (feature_width, feature_width):
             # Crop does not satisfy size constraint, skip keypoint.
             print("skip")
             continue
-        patches = np.array(np.hsplit(np.array(np.hsplit(crop, 4)).reshape(4,-1),4))
-        
-        # Build feature vector
-        # TODO implement SIFT features
-        mu = np.mean(patches, axis=2, keepdims=True)
-        patches_norm = (patches - mu)
-            
-        feature_vector = patches.flatten()
-        descriptors.append(feature_vector)
+
+        # Create SIFT descriptor
+        patches_magnitudes = np.array(np.hsplit(np.array(np.hsplit(crop_magnitudes, 4)).reshape(4,-1),4)).reshape(-1,feature_width)
+        patches_angles = np.array(np.hsplit(np.array(np.hsplit(crop_angles, 4)).reshape(4,-1),4)).reshape(-1,feature_width)
+        feature_vector = list()
+        for patch_i in range(patches_magnitudes.shape[0]):
+            bins = np.digitize(patches_angles[patch_i], np.arange(0,360,360 // n_bins))
+            bin_vector = np.zeros(n_bins)
+            for bin_i in range(0, n_bins):
+                mask = np.array(bins == bin_i).flatten()
+                bin_vector[bin_i] = np.sum(patches_magnitudes[patch_i].flatten()[mask])
+            bin_vector = bin_vector / np.sum(bin_vector)
+            feature_vector.append(bin_vector)
+        descriptors.append(np.array(feature_vector).flatten())
     return np.array(descriptors)
