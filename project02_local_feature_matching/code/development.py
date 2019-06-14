@@ -106,7 +106,6 @@ def get_features(image, x, y, feature_width):
         crop_angles = angles[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
         if crop_magnitudes.shape != (feature_width, feature_width):
             # Crop does not satisfy size constraint, skip keypoint.
-            print("skip")
             continue
 
         # Create SIFT descriptor
@@ -119,7 +118,8 @@ def get_features(image, x, y, feature_width):
             for bin_i in range(0, n_bins):
                 mask = np.array(bins == bin_i).flatten()
                 bin_vector[bin_i] = np.sum(patches_magnitudes[patch_i].flatten()[mask])
-            bin_vector = bin_vector / np.sum(bin_vector)
             feature_vector.append(bin_vector)
-        descriptors.append(np.array(feature_vector).flatten())
+        feature_vector_norm = (np.array(feature_vector).flatten() / 
+                               np.array(feature_vector).flatten().sum())
+        descriptors.append(feature_vector_norm)
     return np.array(descriptors)
