@@ -1,0 +1,331 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CSCI 1430 Written Question Template
+%
+% This is a LaTeX document. LaTeX is a markup language for producing documents.
+% Your task is to answer the questions by filling out this document, then to
+% compile this into a PDF document.
+%
+% TO COMPILE:
+% > pdflatex thisfile.tex
+%
+% If you do not have LaTeX and need a LaTeX distribution:
+% - Departmental machines have one installed.
+% - Personal laptops (all common OS): http://www.latex-project.org/get/
+%
+% If you need help with LaTeX, come to office hours. Or, there is plenty of help online:
+% https://en.wikibooks.org/wiki/LaTeX
+%
+% Good luck!
+% James and the 1430 staff
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% How to include two graphics on the same line:
+%
+% \includegraphics[width=0.49\linewidth]{yourgraphic1.png}
+% \includegraphics[width=0.49\linewidth]{yourgraphic2.png}
+%
+% How to include equations:
+%
+% \begin{equation}
+% y = mx+c
+% \end{equation}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue]{hyperref}
+\usepackage[a4paper,margin=1.5in]{geometry}
+\usepackage{booktabs}
+\usepackage{stackengine,graphicx}
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage{amsmath}
+
+% python code format: https://github.com/olivierverdier/python-latex-highlighting
+\usepackage{pythonhighlight}
+
+\frenchspacing
+\setlength{\parindent}{0cm} % Default is 15pt.
+\setlength{\parskip}{0.3cm plus1mm minus1mm}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Project 4 Questions}
+\rhead{CSCI 1430}
+\rfoot{\thepage}
+
+\date{}
+
+\title{\vspace{-1cm}Project 4 Questions}
+
+
+\begin{document}
+\maketitle
+\vspace{-2cm}
+\thispagestyle{fancy}
+
+\section*{Instructions}
+\begin{itemize}
+  \item 5 questions (Q5 with a code component).
+  \item Write code where appropriate.
+  \item Feel free to include images or equations.
+  \item Please make this document anonymous.
+  \item On upload, \textbf{Gradescope will ask you to assign question numbers to your pages}. Making each question end with a page break after your answer is a good way to ease this process. \textbf{Failing to assign page numbers will result in a deduction.}
+\end{itemize}
+
+\section*{Questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{Q1:} Many traditional computer vision algorithms use convolutional filters to extract feature representations, e.g., in SIFT, to which we then often apply machine learning classification techniques. Convolutional neural networks also use filters within a machine learning algorithm.
+
+What is different about the construction of the filters in each of these approaches? Please declare and explain the advantages and disadvantages of these two approaches.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{A1:} Your answer here.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagebreak
+\paragraph{Q2:} Many CNNs have a fully connected multi-layer perceptron (MLP) after the convolutional layers as a general purpose `decision-making' subnetwork. What effects might a \emph{locally-connected} MLP have on computer vision applications, and why? 
+
+Please give your answer in terms of the learned convolution feature maps, their connections, and the perceptrons in the MLP.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{A2:} Your answer here.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagebreak
+\paragraph{Q3:} Given a neural network and the stochastic gradient descent training approach for that classifier, discuss how the \emph{learning rate}, \emph{batch size}, and \emph{training time} hyperparameters might affect the training process and outcome.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{A3:} Your answer here.
+
+
+
+\pagebreak
+\paragraph{Q4:} What effects does adding a max pooling layer have for a single convolutional layer, where the output with max pooling is some size larger than 1 x 1 x d?
+
+\emph{Notes:} 'Global' here means whole image; 'local' means only in some image region.
+
+\emph{LaTeX:} Use command  `\textbackslash bullet' ($\bullet$) to fill in the dots.
+
+\paragraph{A4:} Multiple choice. Choose all that apply. Feel free to leave written justification if desired.
+
+\begin{tabular}[h]{lr}
+\toprule
+Increases computational cost of training & $\circ$ \\
+Decreases computational cost of training & $\circ$ \\
+Increases computational cost of testing & $\circ$ \\
+Decreases computational cost of testing & $\circ$ \\
+\midrule
+Increases overfitting & $\circ$ \\
+Decreases overfitting & $\circ$ \\
+Increases underfitting & $\circ$ \\
+Decreases underfitting & $\circ$ \\
+\midrule
+Increases the nonlinearity of the decision function & $\circ$ \\
+Decreases the nonlinearity of the decision function & $\circ$ \\
+\midrule
+Provides local rotational invariance & $\circ$ \\
+Provides global rotational invariance & $\circ$ \\
+Provides local scale invariance & $\circ$ \\
+Provides global scale invariance & $\circ$ \\
+Provides local translational invariance & $\circ$ \\
+Provides global translational invariance & $\circ$ \\
+\bottomrule
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Something to think about (ungraded):} Given some input to a convolutional layer with stride 2$\times$2 and kernel size 3$\times$3, and ignoring the boundary, what is the minimum number of convolutional filters required to preserve all input information in the output feature map?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Multiple choice. 
+\emph{LaTeX:} Use command  `\textbackslash bullet' ($\bullet$) to fill in the dots.
+
+\begin{tabular}[h]{lc}
+\toprule
+0.5 & $\circ$ \\
+1 & $\circ$ \\
+2 & $\circ$ \\
+4 & $\circ$ \\
+It's impossible & $\circ$ \\
+\bottomrule
+\end{tabular}
+
+
+% Please leave the pagebreak
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Q5 background:} 
+Let us consider using a neural network (non-convolutional) to perform classification on the \href{http://yann.lecun.com/exdb/mnist/}{MNIST dataset} of handwritten digits, with 10 classes covering the digits 0--9. Each image is 28$\times$28 pixels, and so the network input is a 784-dimensional vector $\mathbf{x}=(x_1,x_2,...,x_i,...x_{784})$. The output of the neural network is probability distribution $\mathbf{p}=(p_1,...,p_{10})$ over the 10 classes. Suppose our network only has one fully-connected layer with $10$ neurons with one for each class. As we only have one layer with no multi-layer composition, there's no need to use an activation function.
+
+We begin by computing a 10-dimensional vector $\mathbf{l}=(l_1,l_2,...,l_j,...,l_{10})$ as: 
+\begin{equation}
+    l_j = w_j \cdot x + b_j = \sum_{i=1}^{784}w_{ij}x_i + b_j
+\end{equation} 
+These distances from the hyperplane are sometimes called `logits' (hence $l$) when they are the output of the last layer of a network. In our case, we only have \emph{one} layer, so our single layer is the last layer.
+
+\hspace{\fill}\rule{0.5\linewidth}{.5pt}\hspace{\fill}
+
+Often we want to talk about the confidence of a classification. So, to turn our logits into a probability distribution for our ten classes, we apply the \emph{softmax} function:
+\begin{equation}
+    p_j = \frac{e^{l_j}}{\sum_je^{l_j}}
+\end{equation}
+Each $p_j$ will be positive, and $\sum_jp_j = 1$, and so softmax is guaranteed to output a probability distribution. Picking the most probable class provides our network's prediction.
+
+These operations would be sufficient to classify a new test example \emph{if} our weights and biases were trained.
+
+\hspace{\fill}\rule{0.5\linewidth}{.5pt}\hspace{\fill}
+
+To train our network, let's declare a loss function. Let $y_j=1$ if class $j$ is the true label for $x$, and $y_j = 0$ if $j$ is not the true label. Then, we define the \emph{cross-entropy loss}:
+\begin{equation}
+    L(w,b,x) = - \sum_{j=1}^{10}y_j\ln(p_j),
+\end{equation}
+which, after substitution of Eqs. 2 and 1, lets us compute an error between the labeled ground truth distribution and our predicted distribution.
+
+The loss is computed once for every different training example. When every training example has been presented to the training process, we call this an \emph{epoch}. Typically we will train for many epochs until our loss over all training examples is minimized.
+
+So...why this loss? It can be shown that minimizing the cross-entropy loss is equivalent to minimizing a distance between probability distributions called the Kullback-Leibler divergence, and so this loss form has a useful probabilistic interpretation. Other losses are also applicable, with their own interpretations, but these details are beyond the scope of this course.
+
+\hspace{\fill}\rule{0.5\linewidth}{.5pt}\hspace{\fill}
+
+Onto the training algorithm. Neural networks are usually optimized using gradient descent. For each training example in each epoch, we compute gradients via backpropagation (an application of the chain rule in differentiation) to update the classifier parameters via a learning rate $\lambda$:
+\begin{equation}
+w_{ij} = w_{ij} - \lambda\frac{\partial L}{\partial w_{ij}}, \\
+\end{equation}
+\begin{equation}
+b_j = b_j - \lambda\frac{\partial L}{\partial b_j}.
+\end{equation}
+
+We must deduce $\frac{\partial L}{\partial w_{ij}}$ and $\frac{\partial L}{\partial b_j}$ as expressions in terms of $x_i$ and $p_j$.
+
+\emph{Intuition:} Let's just consider the weights. To compute the change in the cross-entropy loss with respect to neuron weights $\frac{\partial L}{\partial w_{ij}}$, we will need to compute and chain together three different terms:
+\begin{enumerate}
+\itemsep0em 
+\listparindent0em
+\topsep0em
+\parsep0em
+\partopsep0em
+\item the change in the loss with respect to the softmax output, 
+\item the change in the softmax output with respect to the neuron output, and
+\item the change in the neuron output with respect to the neuron weights.
+\end{enumerate}
+We must derive each individually, and then formulate the final term via the chain rule. The biases follow in a similar fashion.
+
+The derivation is beyond the scope of this class, and so we provide them here:
+\begin{equation}
+\frac{\delta L}{\delta w_{ij}} = \frac{\delta L}{\delta p_a} \frac{\delta p_a}{\delta l_j} \frac{\delta l_j}{w_{ij}} =\begin{cases}
+x_i(p_j-1), a = j\\
+x_ip_j,  a\neq j
+\end{cases}
+\label{eq:wupdate}
+\end{equation}
+\begin{equation}
+\frac{\delta L}{\delta b_j} = \frac{\delta L}{\delta p_a} \frac{\delta p_a}{\delta l_j} \frac{\delta l_j}{b_j} =\begin{cases}
+(p_j-1), a = j\\
+p_j,  a\neq j
+\end{cases}
+\label{eq:bupdate}
+\end{equation}
+Here, $a$ is the predicted class label and $j$ is the true class label. An alternative form you might see shows $\frac{\delta L}{\delta w_{ij}} = x_i(p_j-y_j)$ and $\frac{\delta L}{\delta b_j} = p_j-y_j$ where $y_j=1$ if class $j$ is the true label for $x$, and $y_j = 0$ if $j$ is not the true label.
+
+So...after all of that, our gradient update rules are surprisingly simple!
+
+\emph{Further details:} For interested students, we refer students to Chapter 1 of \href{https://cs.brown.edu/courses/csci1460/assets/files/deep-learning.pdf}{Prof.~Charniak's deep learning notes}, which derives these gradient update rules. We also refer to \href{https://www.ics.uci.edu/~pjsadows/notes.pdf}{Prof.~Sadowski's notes on backpropagation}: Section 1 derives terms first for cross-entropy loss with logistic (sigmoid) activation, and then Section 2 derives terms for cross-entropy loss with softmax. The Wikipedia article on \href{https://en.wikipedia.org/wiki/Backpropagation}{the backpropagation algorithm} likewise represents a derivation walkthrough of the general case with many hidden layers each with sigmoid activation functions, and a final layer with a softmax function.
+
+\hspace{\fill}\rule{0.5\linewidth}{.5pt}\hspace{\fill}
+
+
+\paragraph{Q5:} We will implement these steps in code using numpy. We provide a code stencil \texttt{main.py} which loads one of two datasets: MINST and the scene recognition dataset from Project 3. We also provide two models: a neural network, and then a neural network whose logits are used as input to an SVM classifier. Please look at the comments in \texttt{main.py} for the arguments to pass in to the program for each condition. The neural network model is defined in \texttt{model.py}, and the parts we must implement are in function \texttt{train\_nn()}. 
+
+\emph{Tasks:} Please follow the steps to implement the forward model evaluation and backward gradient update steps. Then, run your model on all four conditions and report training loss and accuracy across different numbers of epoch training. 
+
+What do these numbers tell us about the capacity of the network, the complexity of the two problems, the value of training, and the value of the two different classification approaches?
+
+Please also include your \texttt{train\_nn()} code overleaf (without our helper comments).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{A5:}
+
+\begin{itemize}
+\item NN on MNIST: 
+	\begin{itemize}
+	\item Epoch 0 loss: xx     Accuracy: xx\%
+	\item Epoch 4 loss: xx     Accuracy: xx\%
+	\item Epoch 9 loss: xx     Accuracy: xx\%
+	\end{itemize}
+\item NN+SVM on MNIST : xx\%
+	\begin{itemize}
+	\item Epoch 0 loss: xx     Accuracy: xx\%
+	\item Epoch 4 loss: xx     Accuracy: xx\%
+	\item Epoch 9 loss: xx     Accuracy: xx\%
+	\end{itemize}
+\item NN on SceneRec: xx\%
+	\begin{itemize}
+	\item Epoch 0 loss: xx     Accuracy: xx\%
+	\item Epoch 4 loss: xx     Accuracy: xx\%
+	\item Epoch 9 loss: xx     Accuracy: xx\%
+	\end{itemize}
+\item NN+SVM on SceneRec:  xx\%
+	\begin{itemize}
+	\item Epoch 0 loss: xx     Accuracy: xx\%
+	\item Epoch 4 loss: xx     Accuracy: xx\%
+	\item Epoch 9 loss: xx     Accuracy: xx\%
+	\end{itemize}
+\end{itemize}
+
+
+\pagebreak
+\begin{python}
+def train_nn(self):
+    indices = list(range(self.train_images.shape[0]))
+    delta_W = np.zeros((self.input_size, self.num_classes))
+    delta_b = np.zeros((1, self.num_classes))
+
+    for epoch in range(hp.num_epochs):
+	   loss_sum = 0
+        random.shuffle(indices)
+
+        for index in range(len(indices)):
+            i = indices[index]
+            img = self.train_images[i]
+            gt_label = self.train_labels[i]
+
+            ################
+            # FORWARD PASS:
+            # Step 1:
+
+            # Step 2:
+
+            # Step 3:
+                
+            #loss_sum = loss_sum + your_loss
+                
+            ################
+            # BACKWARD PASS (BACK PROPAGATION):            
+            # Step 4:                
+
+            # Step 5:
+                
+       print( "Epoch "+str(epoch)+": Total loss: "+str(loss_sum) )
+\end{python}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
