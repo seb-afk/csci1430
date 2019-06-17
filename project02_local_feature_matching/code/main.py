@@ -138,10 +138,10 @@ def main():
     # want to use the ta ground truth points, you can comment out the precedeing two
     # lines and uncomment the following line to do this.
 
-    (x1, y1, x2, y2) = cheat_interest_points(eval_file, scale_factor)
+    #(x1, y1, x2, y2) = cheat_interest_points(eval_file, scale_factor)
 
-    # (x1, y1) = development.get_interest_points(image1, feature_width)
-    # (x2, y2) = development.get_interest_points(image2, feature_width)
+    (x1, y1) = development.get_interest_points(image1, feature_width)
+    (x2, y2) = development.get_interest_points(image2, feature_width)
 
     # if you want to view your corners uncomment these next lines!
 
