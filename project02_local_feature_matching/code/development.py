@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.spatial.distance import cdist
+from skimage.feature import peak_local_max
+from skimage import filters
 
 def get_idx_2smallest_dist(distances):
     """Given a distance matrix it returns the index of the k
@@ -123,3 +125,56 @@ def get_features(image, x, y, feature_width):
                                np.array(feature_vector).flatten().sum())
         descriptors.append(feature_vector_norm)
     return np.array(descriptors)
+
+def get_interest_points(image, feature_width):
+    '''
+    Returns a set of interest points for the input image
+
+    Parameters
+    ----------
+
+    image: Numpy array.
+
+    feature_width: int.
+        Sigma value for gaussian filter.
+
+    Returns
+    -------
+
+
+    '''
+    # TODO: Your implementation here! See block comments and the project webpage 
+    # for instructions
+    """
+    1.  Compute the horizontal and vertical derivatives of the image Ix and Iy by 
+        con- volving the original image with derivatives of Gaussians (Section 3.2.3).
+    2.  Compute the three images corresponding to the outer products of these 
+        gradients. (The matrix A is symmetric, so only three entries are needed.)
+    3.  Convolve each of these images with a larger Gaussian.
+    4.  Compute a scalar interest measure using one of the formulas discussed above.
+    5.  Find local maxima above a certain threshold and report them as detected 
+        feature point locations.
+    """
+    alpha = 0.04
+    sigma = feature_width
+    image_blurred = filters.gaussian(image, sigma)
+    Iy, Ix = np.gradient(image_blurred)
+    Ixx = filters.gaussian(Ix * Ix, sigma)
+    Iyy = filters.gaussian(Iy * Iy, sigma)
+    Ixy = filters.gaussian(Ix * Iy, sigma)
+    R = Ixx * Iyy - Ixy**2 - alpha * (Ixx + Iyy)**2
+
+    R_norm = (R-np.min(R))/(np.max(R)-np.min(R))
+    corners = R_norm
+    threshold = np.mean(R_norm)
+    mask = [R_norm<threshold]
+    corners[mask] = 0
+
+    keypoints = peak_local_max(corners)
+
+    # These are placeholders - replace with the coordinates of your interest points!
+    ys = keypoints[:,0]
+    xs = keypoints[:,1]
+    #print("hahah")
+
+    return xs, ys
