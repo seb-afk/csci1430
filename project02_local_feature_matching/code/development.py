@@ -105,7 +105,6 @@ def get_features(image, x, y, feature_width):
 
     # Loop through keypoints
     for xi, yi in zip(x, y):
-        #crop_image = image[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
         crop_magnitudes = magnitudes[yi-offset +
                                      1:yi+offset+1, xi-offset+1:xi+offset+1]
         crop_angles = angles[yi-offset+1:yi+offset+1, xi-offset+1:xi+offset+1]
