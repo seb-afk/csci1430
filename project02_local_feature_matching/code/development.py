@@ -17,8 +17,8 @@ def get_idx_2smallest_dist(distances):
     -------
 
     d1_ix, d2_ix: Tuple.
-        For eact row of the distance matrix it returns the index of the smallest
-        and second smallest distance.
+        For eact row of the distance matrix it returns the index of the
+        smallest and second smallest distance.
 
     """
     n_rows = distances.shape[0]
@@ -29,7 +29,7 @@ def get_idx_2smallest_dist(distances):
 
 
 def match_features(im1_features, im2_features):
-    """ Returns the index of the common image features as well as the 
+    """ Returns the index of the common image features as well as the
     confidence of a correct match.
 
     Parameters
@@ -46,7 +46,7 @@ def match_features(im1_features, im2_features):
         First column = matches for image 1.
         Second column = matches for image 2.
 
-    confidences: list, confidence for each match identified. 
+    confidences: list, confidence for each match identified.
         We define it as:
 
             confidence = 1 - NNDR
@@ -74,7 +74,7 @@ def get_features(image, x, y, feature_width):
     Parameters
     ----------
 
-    image: a grayscale or color image (your choice depending on your 
+    image: a grayscale or color image (your choice depending on your
         implementation)
     x: np array of x coordinates of interest points
     y: np array of y coordinates of interest points
@@ -146,7 +146,7 @@ def get_interest_points(image, feature_width, sigma=2, k=0.04):
     feature_width: int.
 
     k: float.
-        Harris detector free parameter. 
+        Harris detector free parameter.
 
     Returns
     -------
@@ -157,14 +157,16 @@ def get_interest_points(image, feature_width, sigma=2, k=0.04):
     Description
     -----------
 
-    1.  Compute the horizontal and vertical derivatives of the image Ix and Iy by 
-        con- volving the original image with derivatives of Gaussians (Section 3.2.3).
-    2.  Compute the three images corresponding to the outer products of these 
-        gradients. (The matrix A is symmetric, so only three entries are needed.)
+    1.  Compute the horizontal and vertical derivatives of the image by
+        con- volving the original image with derivatives of Gaussians (3.2.3).
+    2.  Compute the three images corresponding to the outer products of these
+        gradients. (The matrix A is symmetric, so only three entries are
+        needed.)
     3.  Convolve each of these images with a larger Gaussian.
-    4.  Compute a scalar interest measure using one of the formulas discussed above.
-    5.  Find local maxima above a certain threshold and report them as detected 
-        feature point locations.
+    4.  Compute a scalar interest measure using one of the formulas discussed
+        above.
+    5.  Find local maxima above a certain threshold and report them as
+        detected feature point locations.
     '''
     image_blurred = filters.gaussian(image, sigma)
     Iy, Ix = np.gradient(image_blurred)
