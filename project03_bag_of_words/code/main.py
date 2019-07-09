@@ -7,6 +7,7 @@ from student import get_tiny_images, build_vocabulary, get_bags_of_words, \
     svm_classify, nearest_neighbor_classify
 from create_results_webpage import create_results_webpage
 
+
 def projSceneRecBoW():
     '''
     For this project, you will need to report performance for three
@@ -71,12 +72,12 @@ def projSceneRecBoW():
     # somewhat sorted by similarity so that the confusion matrix looks more
     # structured (indoor and then urban and then rural).
     categories = ['Kitchen', 'Store', 'Bedroom', 'LivingRoom', 'Office',
-           'Industrial', 'Suburb', 'InsideCity', 'TallBuilding', 'Street',
-           'Highway', 'OpenCountry', 'Coast', 'Mountain', 'Forest']
+                  'Industrial', 'Suburb', 'InsideCity', 'TallBuilding', 'Street',
+                  'Highway', 'OpenCountry', 'Coast', 'Mountain', 'Forest']
 
     # This list of shortened category names is used later for visualization.
     abbr_categories = ['Kit', 'Sto', 'Bed', 'Liv', 'Off', 'Ind', 'Sub',
-        'Cty', 'Bld', 'St', 'HW', 'OC', 'Cst', 'Mnt', 'For']
+                       'Cty', 'Bld', 'St', 'HW', 'OC', 'Cst', 'Mnt', 'For']
 
     # Number of training examples per category to use. Max is 100. For
     # simplicity, we assume this is the number of test cases per category as
@@ -96,7 +97,7 @@ def projSceneRecBoW():
     #   test_labels        1500x1   list
 
     ############################################################################
-    ## Step 1: Represent each image with the appropriate feature
+    # Step 1: Represent each image with the appropriate feature
     # Each function to construct features should return an N x d matrix, where
     # N is the number of paths passed to the function and d is the
     # dimensionality of each image representation. See the starter code for
@@ -109,7 +110,7 @@ def projSceneRecBoW():
         print('Loading tiny images...')
         # YOU CODE get_tiny_images (see student.py)
         train_image_feats = get_tiny_images(train_image_paths)
-        test_image_feats  = get_tiny_images(test_image_paths)
+        test_image_feats = get_tiny_images(test_image_paths)
         print('Tiny images loaded.')
 
     elif FEATURE.lower() == 'bag of words':
@@ -119,9 +120,10 @@ def projSceneRecBoW():
         # or the length of your feature vectors), simply delete the vocab.npy
         # file and re-run main.py
         if not os.path.isfile('vocab.npy'):
-            print('No existing visual word vocabulary found. Computing one from training images.')
+            print(
+                'No existing visual word vocabulary found. Computing one from training images.')
 
-            #Larger values will work better (to a point), but are slower to compute
+            # Larger values will work better (to a point), but are slower to compute
             vocab_size = 200
 
             # YOU CODE build_vocabulary (see student.py)
@@ -134,7 +136,7 @@ def projSceneRecBoW():
         # load it up later if you want to just test your classifiers without
         # re-computing features
 
-        test_image_feats  = get_bags_of_words(test_image_paths)
+        test_image_feats = get_bags_of_words(test_image_paths)
         # Same goes here for test image features.
 
     elif FEATURE.lower() == 'placeholder':
@@ -145,7 +147,7 @@ def projSceneRecBoW():
         raise ValueError('Unknown feature type!')
 
     ############################################################################
-    ## Step 2: Classify each test image by training and using the appropriate classifier
+    # Step 2: Classify each test image by training and using the appropriate classifier
     # Each function to classify test features will return an N x 1 string array,
     # where N is the number of test cases and each entry is a string indicating
     # the predicted category for each test image. Each entry in
@@ -158,14 +160,16 @@ def projSceneRecBoW():
 
     if CLASSIFIER.lower() == 'nearest neighbor':
         # YOU CODE nearest_neighbor_classify (see student.py)
-        predicted_categories = nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats)
+        predicted_categories = nearest_neighbor_classify(
+            train_image_feats, train_labels, test_image_feats)
 
     elif CLASSIFIER.lower() == 'support vector machine':
         # YOU CODE svm_classify (see student.py)
-        predicted_categories = svm_classify(train_image_feats, train_labels, test_image_feats)
+        predicted_categories = svm_classify(
+            train_image_feats, train_labels, test_image_feats)
 
     elif CLASSIFIER.lower() == 'placeholder':
-        #The placeholder classifier simply predicts a random category for every test case
+        # The placeholder classifier simply predicts a random category for every test case
         random_permutation = np.random.permutation(len(test_labels))
         predicted_categories = [test_labels[i] for i in random_permutation]
 
@@ -173,7 +177,7 @@ def projSceneRecBoW():
         raise ValueError('Unknown classifier type')
 
     ############################################################################
-    ## Step 3: Build a confusion matrix and score the recognition system
+    # Step 3: Build a confusion matrix and score the recognition system
     # You do not need to code anything in this section.
 
     # If we wanted to evaluate our recognition method properly we would train
@@ -186,13 +190,14 @@ def projSceneRecBoW():
     # confusions reasonable?
     ############################################################################
 
-    create_results_webpage( train_image_paths, \
-                            test_image_paths, \
-                            train_labels, \
-                            test_labels, \
-                            categories, \
-                            abbr_categories, \
-                            predicted_categories)
+    create_results_webpage(train_image_paths,
+                           test_image_paths,
+                           train_labels,
+                           test_labels,
+                           categories,
+                           abbr_categories,
+                           predicted_categories)
+
 
 if __name__ == '__main__':
     projSceneRecBoW()
