@@ -3,8 +3,7 @@ import numpy as np
 import os
 
 from helpers import get_image_paths
-from student import get_tiny_images, build_vocabulary, get_bags_of_words, \
-    svm_classify, nearest_neighbor_classify
+from development import get_tiny_images, build_vocabulary, get_bags_of_words, svm_classify, nearest_neighbor_classify
 from create_results_webpage import create_results_webpage
 
 
@@ -57,16 +56,16 @@ def projSceneRecBoW():
     # Step 0: Set up parameters, category list, and image paths.
     # Uncomment various feature and classifier combinations to test them.
 
-    #FEATURE = 'tiny image'
-    #FEATURE = 'bag of words'
-    FEATURE = 'placeholder'
+    # FEATURE = 'tiny image'
+    FEATURE = 'bag of words'
+    # FEATURE = 'placeholder'
 
-    #CLASSIFIER = 'nearest neighbor'
+    CLASSIFIER = 'nearest neighbor'
     #CLASSIFIER = 'support vector machine'
-    CLASSIFIER = 'placeholder'
+    # CLASSIFIER = 'placeholder'
 
     # This is the path the script will look at to load images from.
-    data_path = '../data/'
+    data_path = 'project03_bag_of_words/data/'
 
     # This is the list of categories / directories to use. The categories are
     # somewhat sorted by similarity so that the confusion matrix looks more
@@ -83,6 +82,10 @@ def projSceneRecBoW():
     # simplicity, we assume this is the number of test cases per category as
     # well.
     num_train_per_cat = 100
+
+    # TODO Remove this, it is just for testing.
+    # categories = ['Kitchen', 'Store']
+    # num_train_per_cat = 5
 
     # This function returns string arrays containing the file path for each train
     # and test image, as well as string arrays with the label of each train and
