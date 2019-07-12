@@ -6,6 +6,7 @@ from skimage.transform import resize
 from scipy.spatial.distance import cdist
 from sklearn.cluster import MiniBatchKMeans
 from collections import Counter
+from sklearn.svm import LinearSVC
 
 
 def get_tiny_images(image_paths):
@@ -123,7 +124,24 @@ def get_bags_of_words(image_paths):
 
 
 def svm_classify(train_image_feats, train_labels, test_image_feats):
-    pass
+    """Train SVC and classify test images.
+    
+    Parameters
+    ----------
+    train_image_feats : Numpy array (N x D)
+        Feature matrix for training.
+    train_labels : list()
+        Python list of length N.
+    test_image_feats : Numpy array (M x D)
+        Feature matrix for testing.
+    
+    Returns
+    -------
+    Numpy array (M x 1) of strings.
+        Predicted labels for the test images
+    """
+    y_predict = LinearSVC().fit(train_image_feats, train_labels).predict(test_image_feats)
+    return y_predict
 
 
 def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats):
