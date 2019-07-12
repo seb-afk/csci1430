@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import numpy as np
 import os
-
+import time
 from helpers import get_image_paths
 from development import get_tiny_images, build_vocabulary, get_bags_of_words, svm_classify, nearest_neighbor_classify
 from create_results_webpage import create_results_webpage
@@ -65,7 +65,7 @@ def projSceneRecBoW():
     # CLASSIFIER = 'placeholder'
 
     # This is the path the script will look at to load images from.
-    data_path = 'project03_bag_of_words/data/'
+    data_path = '../data/'
 
     # This is the list of categories / directories to use. The categories are
     # somewhat sorted by similarity so that the confusion matrix looks more
@@ -85,7 +85,7 @@ def projSceneRecBoW():
 
     # TODO Remove this, it is just for testing.
     # categories = ['Kitchen', 'Store']
-    # num_train_per_cat = 5
+    # num_train_per_cat = 10
 
     # This function returns string arrays containing the file path for each train
     # and test image, as well as string arrays with the label of each train and
@@ -122,7 +122,7 @@ def projSceneRecBoW():
         # you need to re-generate the vocab (for example if you change its size
         # or the length of your feature vectors), simply delete the vocab.npy
         # file and re-run main.py
-        if not os.path.isfile('vocab.npy'):
+        if not os.path.isfile(data_path+'vocab.npy'):
             print(
                 'No existing visual word vocabulary found. Computing one from training images.')
 
@@ -131,7 +131,7 @@ def projSceneRecBoW():
 
             # YOU CODE build_vocabulary (see student.py)
             vocab = build_vocabulary(train_image_paths, vocab_size)
-            np.save('vocab.npy', vocab)
+            np.save('../data/vocab.npy', vocab)
 
         # YOU CODE get_bags_of_words.m (see student.py)
         train_image_feats = get_bags_of_words(train_image_paths)
@@ -203,4 +203,7 @@ def projSceneRecBoW():
 
 
 if __name__ == '__main__':
+    tic = time.time()
     projSceneRecBoW()
+    toc = time.time()
+    print(toc - tic)
