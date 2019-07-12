@@ -1,11 +1,10 @@
 import numpy as np
-import matplotlib
 from skimage.io import imread
 from skimage.color import rgb2grey
 from skimage.feature import hog
 from skimage.transform import resize
 from scipy.spatial.distance import cdist
-from sklearn.cluster import KMeans, MiniBatchKMeans
+from sklearn.cluster import MiniBatchKMeans
 from collections import Counter
 
 
@@ -31,7 +30,6 @@ def get_tiny_images(image_paths):
         tmp = rgb2grey(tmp)
         tmp = resize(tmp, (size, size), anti_aliasing=True)
         images_array[i, ] = tmp.reshape((1, -1))
-
     return images_array
 
 
@@ -54,9 +52,12 @@ def build_vocabulary(image_paths, vocab_size):
     hog_all = get_hog_features(image_paths)
     hog_all = np.vstack(hog_all)
     kmeans = MiniBatchKMeans(n_clusters=vocab_size, max_iter=100)
+    n_features = hog_all.shape[0]
+    n_sample = int(n_features * .1) 
     print("Kmeans clustering of matrix with shape: {}".format(hog_all.shape))
-    kmeans.fit(np.array(hog_all))
-
+    hog_all = hog_all[np.random.choice(n_features, n_sample, replace=False), :]
+    print("Kmeans clustering of matrix with shape: {}".format(hog_all.shape))
+    kmeans.fit(hog_all)
     return kmeans.cluster_centers_
 
 
@@ -71,7 +72,7 @@ def get_hog_features(image_paths):
 
     Returns
     -------
-    list(array_1, array_2, array_n)
+    list(array_1, array_2, array_i)
         List of Numpy arrays with shape (NxD) containing the Hog features for
         each image. N is the number of features and D the number of dimensions.
     """
@@ -106,9 +107,22 @@ def get_bags_of_words(image_paths):
         and D is size of the histogram built for each image.
     """
     hog_all = get_hog_features(image_paths)
+    vocab = np.load("../data/vocab.npy")
+    vocab_size = vocab.shape[0]
+    results = list()
+    for hog_i in hog_all:
+        bag_of_words = list()
+        dist = cdist(hog_i, vocab)
+        num_features = dist.shape[0]
+        y_pred = list()
+        for i in range(num_features):
+            closest_y = np.argsort(dist[i])[0]
+            y_pred.append(closest_y)
+        results.append(np.bincount(np.array(y_pred), minlength=vocab_size) / sum(y_pred))
+    return np.vstack(results)
 
 
-def svm_classify():
+def svm_classify(train_image_feats, train_labels, test_image_feats):
     pass
 
 
