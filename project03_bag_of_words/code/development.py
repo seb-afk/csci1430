@@ -5,7 +5,7 @@ from skimage.color import rgb2grey
 from skimage.feature import hog
 from skimage.transform import resize
 from scipy.spatial.distance import cdist
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, MiniBatchKMeans
 from collections import Counter
 
 
@@ -51,6 +51,30 @@ def build_vocabulary(image_paths, vocab_size):
     a vocab_size x (z*z*9) (see below) array which contains the cluster
     centers that result from the K Means clustering.
     """
+    hog_all = get_hog_features(image_paths)
+    hog_all = np.vstack(hog_all)
+    kmeans = MiniBatchKMeans(n_clusters=vocab_size, max_iter=100)
+    print("Kmeans clustering of matrix with shape: {}".format(hog_all.shape))
+    kmeans.fit(np.array(hog_all))
+
+    return kmeans.cluster_centers_
+
+
+def get_hog_features(image_paths):
+    """Get HOG features for each image.
+
+    Parameters
+    ----------
+    image_paths : list(str*())
+        A Python list of strings, where each string is a complete path to one
+        image on the disk.
+
+    Returns
+    -------
+    list(array_1, array_2, array_n)
+        List of Numpy arrays with shape (NxD) containing the Hog features for
+        each image. N is the number of features and D the number of dimensions.
+    """
     z = 4
     size = 100
     hog_all = list()
@@ -63,16 +87,25 @@ def build_vocabulary(image_paths, vocab_size):
         hog_features = hog(image, orientations=9, pixels_per_cell=(4, 4),
                            cells_per_block=(z, z)).reshape(-1, z*z*9)
         hog_all.append(hog_features)
-    print("Kmeans clustering")
-    kmeans = KMeans(n_clusters=vocab_size, max_iter=100, n_jobs=1)
-    hog_all = np.vstack(hog_all)
-    kmeans.fit(np.array(hog_all))
-
-    return kmeans.cluster_centers_
+    return hog_all
 
 
 def get_bags_of_words(image_paths):
-    pass
+    """Get bag of words histogram for each image.
+
+    Parameters
+    ----------
+    image_paths : list(str())
+        A Python list of strings, where each string is a complete path to one
+        image on the disk.
+
+    Returns
+    -------
+    bag_of_words : Numpy array (NxD)
+        An (NxD) numpy matrix, where N is the number of images in image_paths
+        and D is size of the histogram built for each image.
+    """
+    hog_all = get_hog_features(image_paths)
 
 
 def svm_classify():
