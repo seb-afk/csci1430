@@ -15,7 +15,7 @@ def get_tiny_images(image_paths):
     Parameters
     ---------
     image_paths : list
-        A 1-D Python list of strings. Each string is a complete path to an 
+        A 1-D Python list of strings. Each string is a complete path to an
         image on the filesystem.
 
     Returns
@@ -54,7 +54,7 @@ def build_vocabulary(image_paths, vocab_size):
     hog_all = np.vstack(hog_all)
     kmeans = MiniBatchKMeans(n_clusters=vocab_size, max_iter=100)
     n_features = hog_all.shape[0]
-    n_sample = int(n_features * .1) 
+    n_sample = int(n_features * .1)
     print("Kmeans clustering of matrix with shape: {}".format(hog_all.shape))
     hog_all = hog_all[np.random.choice(n_features, n_sample, replace=False), :]
     print("Kmeans clustering of matrix with shape: {}".format(hog_all.shape))
@@ -112,20 +112,20 @@ def get_bags_of_words(image_paths):
     vocab_size = vocab.shape[0]
     results = list()
     for hog_i in hog_all:
-        bag_of_words = list()
         dist = cdist(hog_i, vocab)
         num_features = dist.shape[0]
         y_pred = list()
         for i in range(num_features):
             closest_y = np.argsort(dist[i])[0]
             y_pred.append(closest_y)
-        results.append(np.bincount(np.array(y_pred), minlength=vocab_size) / sum(y_pred))
+        bincount = np.bincount(np.array(y_pred), minlength=vocab_size)
+        results.append(bincount / sum(y_pred))
     return np.vstack(results)
 
 
 def svm_classify(train_image_feats, train_labels, test_image_feats):
     """Train SVC and classify test images.
-    
+
     Parameters
     ----------
     train_image_feats : Numpy array (N x D)
@@ -134,39 +134,40 @@ def svm_classify(train_image_feats, train_labels, test_image_feats):
         Python list of length N.
     test_image_feats : Numpy array (M x D)
         Feature matrix for testing.
-    
+
     Returns
     -------
     Numpy array (M x 1) of strings.
         Predicted labels for the test images
     """
-    y_predict = LinearSVC().fit(train_image_feats, train_labels).predict(test_image_feats)
+    y_predict = (LinearSVC().fit(train_image_feats, train_labels)
+                            .predict(test_image_feats))
     return y_predict
 
 
-def nearest_neighbor_classify(train_image_feats, train_labels, test_image_feats):
+def nearest_neighbor_classify(train_feats, train_labels, test_feats):
     """Predicts the class of each image using a KNN classifier.
 
     Parameters
     ----------
-    train_image_feats : Numpy array (N x D)
+    train_feats : Numpy array (N x D)
         An nxd numpy array, where N is the number of training examples, and
         D is the image descriptor vector size.
     train_labels : Numpy array (N x 1)
         An nx1 Python list containing the corresponding ground truth labels
         for the training data.
-    test_image_feats : Numpy array (M x D)
+    test_feats : Numpy array (M x D)
         An MxD numpy array, where m is the number of test images and d is the
         image descriptor vector size.
 
     Returns
     -------
     An mx1 numpy list of strings, where each string is the predicted label for
-    the corresponding image in test_image_feats
+    the corresponding image in test_feats.
     """
     k = 5
     train_labels = np.array(train_labels)
-    dist = cdist(test_image_feats, train_image_feats)
+    dist = cdist(test_feats, train_feats)
     num_test = dist.shape[0]
     y_pred = list()
     for i in range(num_test):
