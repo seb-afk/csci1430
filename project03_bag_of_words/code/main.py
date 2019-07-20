@@ -61,7 +61,7 @@ def projSceneRecBoW():
     # FEATURE = 'placeholder'
 
     CLASSIFIER = 'nearest neighbor'
-    #CLASSIFIER = 'support vector machine'
+    # CLASSIFIER = 'support vector machine'
     # CLASSIFIER = 'placeholder'
 
     # This is the path the script will look at to load images from.
@@ -134,12 +134,19 @@ def projSceneRecBoW():
             np.save('../data/vocab.npy', vocab)
 
         # YOU CODE get_bags_of_words.m (see student.py)
-        train_image_feats = get_bags_of_words(train_image_paths)
+        try:
+            train_image_feats = np.load('../data/train_image_feats.npy')
+        except FileNotFoundError:
+            train_image_feats = get_bags_of_words(train_image_paths)
+            np.save('../data/train_image_feats.npy', train_image_feats)
         # You may want to write out train_image_features here as a *.npy and
         # load it up later if you want to just test your classifiers without
         # re-computing features
-
-        test_image_feats = get_bags_of_words(test_image_paths)
+        try:
+            test_image_feats = np.load("../data/test_image_feats.npy")
+        except FileNotFoundError:
+            test_image_feats = get_bags_of_words(test_image_paths)
+            np.save('../data/test_image_feats.npy', test_image_feats)
         # Same goes here for test image features.
 
     elif FEATURE.lower() == 'placeholder':
