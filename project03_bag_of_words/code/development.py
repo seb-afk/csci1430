@@ -7,6 +7,7 @@ from scipy.spatial.distance import cdist
 from sklearn.cluster import MiniBatchKMeans
 from collections import Counter
 from sklearn.svm import LinearSVC
+from sklearn.preprocessing import StandardScaler
 
 
 def get_tiny_images(image_paths):
@@ -140,9 +141,14 @@ def svm_classify(train_image_feats, train_labels, test_image_feats):
     Numpy array (M x 1) of strings.
         Predicted labels for the test images
     """
-    y_predict = (LinearSVC().fit(train_image_feats, train_labels)
-                            .predict(test_image_feats))
-    return y_predict
+    scaler = StandardScaler()
+    scaler.fit(train_image_feats)
+    train_image_feats_sc = scaler.transform(train_image_feats)
+    test_image_feats_sc = scaler.transform(test_image_feats)
+    svc = LinearSVC()
+    svc.fit(train_image_feats_sc, train_labels)
+    y_predict = svc.predict(test_image_feats_sc)
+    return list(y_predict)
 
 
 def nearest_neighbor_classify(train_feats, train_labels, test_feats):
